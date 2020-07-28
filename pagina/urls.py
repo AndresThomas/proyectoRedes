@@ -20,6 +20,7 @@ from vistas import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('index/', include(urls))
+    path('', include(urls)),
+    
     
 ]
