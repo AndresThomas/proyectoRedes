@@ -20,10 +20,12 @@ class vistaConf(FormView):
     def post(self, request, *arg, **kargs):
         form = DateForm(request.POST or None)
 
-        #print('form',form.data['fecha'])
-        #form =form.data['date']
-        #print(form)
+        print('form',form.data['fecha'])
+        
+        print(form)
         print(form.is_valid())
+        print(form.is_valid)
+
         if form.is_valid():
             
             #hora de la pagina
@@ -36,8 +38,10 @@ class vistaConf(FormView):
             hour  = time[0:2]
             min   = time[3:5]
             print(hour,':',min)
+            print('select: ',valid)
             #hora del server
             valid = datetime.datetime.now().__str__()
+            print(valid)
             date2 = valid[0:10]
             time2 = valid[11:-10] 
             hour2  = time2[0:2]
@@ -51,16 +55,18 @@ class vistaConf(FormView):
                 if(month >= month2):
                     if(day >= day2):
                         bdate = True
+                    elif(month > month2 and day <= day2):
+                        print(date,':',day2,'/',month2,'/',year2)
+                        bdate = True
                     else:
                         bdate = False
-                        raise ValueError('Una fecha valida es a futuro, es decir podrida ser mañana')
+                        raise ValueError('Una fecha valida podria ser mañana')
                 else:
                     raise ValueError('ingrese una fecha valida')
             else:
                 raise ValueError('Ingrese una fecha valida')
 
             if bdate:
-                print(hour2,'>',hour)
                 if(hour >= hour2):
                     if(min >= min2):
                         self.object = form.save(commit=False)
@@ -71,7 +77,7 @@ class vistaConf(FormView):
                     raise ValueError('Ingrese una hora valida')
 
             
-        return render(request,'index/conf.html')
+        return redirect('/configure/')
     
 
 
@@ -134,3 +140,7 @@ class vistaClass(View):
             r = vistaConf.getUrl()
 
             return redirect(r)
+
+class nextClas(View):
+    def get(self, request, *arg, **kargs):
+        return render(request,'index/next.html')

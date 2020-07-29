@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'vistas','bootstrap4','tempus_dominus',
+    'Login','Register',
+    
 ]
 
 MIDDLEWARE = [
